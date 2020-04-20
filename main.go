@@ -31,6 +31,33 @@ func (ug *UnionFind) Connected(a, b int) bool {
 	return ug.elems[a] == ug.elems[b]
 }
 
+type QuickUnion struct {
+	elems []int
+}
+
+func NewQuickUnion(n int) *QuickUnion {
+	elements := make([]int, n)
+	for idx, _ := range elements {
+		elements[idx] = idx
+	}
+	return &QuickUnion{elements}
+}
+
+func (qu *QuickUnion) root(idx int) int {
+	for ; idx != qu.elems[idx]; idx = qu.elems[idx] {
+	}
+	return idx
+}
+
+func (qu *QuickUnion) Union(a, b int) {
+	i, j := qu.root(a), qu.root(b)
+	qu.elems[i] = j
+}
+
+func (qu *QuickUnion) Connected(a, b int) bool {
+	return qu.root(a) == qu.root(b)
+}
+
 func main() {
 	var n int
 	if _, err := fmt.Scanf("%d\n", &n); err != nil {
